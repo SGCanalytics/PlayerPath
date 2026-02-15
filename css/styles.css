@@ -1,0 +1,161 @@
+/* ── Reset & Base ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1a1a1a;
+  background: #f5f5f5;
+  line-height: 1.6;
+}
+
+/* ── Tracker Navigation Bar (injected by nav.js) ─────── */
+.tracker-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #1b5e20;
+  color: #fff;
+}
+
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.home-button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.nav-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* ── Home / Main Menu ────────────────────────────────── */
+.app-header {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+  background: #1b5e20;
+  color: #fff;
+}
+
+.app-title { font-size: 2rem; }
+.app-subtitle { font-size: 1rem; opacity: 0.85; margin-top: 0.25rem; }
+
+.menu-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.menu-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.tracker-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #1a1a1a;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.tracker-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.tracker-icon { font-size: 2rem; }
+.tracker-name { font-weight: 600; font-size: 0.95rem; }
+
+/* ── Tracker Pages ───────────────────────────────────── */
+.tracker-container {
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.tracker-container h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.tracker-description {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Forms ────────────────────────────────────────────── */
+.tracker-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+.form-group label { font-weight: 600; font-size: 0.9rem; }
+.form-group select,
+.form-group input {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  padding: 0.6rem;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover { background: #1b5e20; }
+
+/* ── Shot Log ────────────────────────────────────────── */
+.shot-log {
+  margin-top: 2rem;
+}
+
+.shot-log h2 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+.empty-state { color: #888; font-style: italic; }
+
+/* ── Footer ──────────────────────────────────────────── */
+.app-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #888;
+  font-size: 0.85rem;
+}
