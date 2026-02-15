@@ -144,6 +144,34 @@ body {
 
 .btn-primary:hover { background: #1b5e20; }
 
+.btn-secondary {
+  padding: 0.6rem;
+  background: #757575;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-secondary:hover {
+  background: #616161;
+}
+
+.session-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.session-actions button {
+  flex: 1;
+}
+
 /* ── Shot Log ────────────────────────────────────────── */
 .shot-log {
   margin-top: 2rem;

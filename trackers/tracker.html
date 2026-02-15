@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker - PlayerPath</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- nav.js injects the navigation bar with home button here -->
+
+  <main class="tracker-container">
+    <h1 id="tracker-title">Loading…</h1>
+    <p id="tracker-description" class="tracker-description"></p>
+
+    <form id="tracker-form" class="tracker-form">
+      <div class="form-group">
+        <label for="club">Club</label>
+        <select id="club" name="club"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="swing">Swing Length</label>
+        <select id="swing" name="swing"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="distance">Distance (yards)</label>
+        <input type="number" id="distance" name="distance" min="0" placeholder="">
+      </div>
+
+      <button type="submit" class="btn-primary">Log Shot</button>
+    </form>
+
+    <section id="shot-log" class="shot-log">
+      <h2>Shot Log</h2>
+      <table class="shot-table" id="shot-table" hidden>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Club</th>
+            <th>Swing</th>
+            <th>Distance</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p class="empty-state" id="empty-state">No shots logged yet.</p>
+
+      <div id="session-actions" class="session-actions" hidden>
+        <button id="new-session-btn" class="btn-secondary">Start New Session</button>
+        <button id="return-home-btn" class="btn-primary">Return to Main Menu</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/tracker-config.js"></script>
+  <script src="../js/nav.js"></script>
+  <script>
+    (function () {
+      // Read tracker type from query string: ?type=distance-wedge
+      var params = new URLSearchParams(window.location.search);
+      var type = params.get('type');
+      var config = type && TRACKER_CONFIG[type];
+
+      if (!config) {
+        document.getElementById('tracker-title').textContent = 'Tracker not found';
+        document.getElementById('tracker-description').textContent =
+          'Unknown tracker type. Please return to the main menu.';
+        document.getElementById('tracker-form').hidden = true;
+        return;
+      }
+
+      // Populate page from config
+      document.title = config.title + ' - PlayerPath';
+      document.getElementById('tracker-title').textContent = config.title;
+      document.getElementById('tracker-description').textContent = config.description;
+
+      // Update nav title (already rendered by nav.js)
+      var navTitle = document.querySelector('.nav-title');
+      if (navTitle) navTitle.textContent = config.title;
+
+      // Populate club select
+      var clubSelect = document.getElementById('club');
+      config.clubs.forEach(function (c) {
+        var opt = document.createElement('option');
+        opt.value = c.value;
+        opt.textContent = c.label;
+        clubSelect.appendChild(opt);
+      });
+
+      // Populate swing select
+      var swingSelect = document.getElementById('swing');
+      config.swings.forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value = s.value;
+        opt.textContent = s.label;
+        swingSelect.appendChild(opt);
+      });
+
+      // Distance field
+      var distInput = document.getElementById('distance');
+      distInput.max = config.distanceMax;
+      distInput.placeholder = config.distancePlaceholder;
+
+      // Shot logging
+      var shots = [];
+      var tbody = document.querySelector('#shot-table tbody');
+      var table = document.getElementById('shot-table');
+      var empty = document.getElementById('empty-state');
+
+      // Session action buttons
+      var sessionActions = document.getElementById('session-actions');
+      var newSessionBtn = document.getElementById('new-session-btn');
+      var returnHomeBtn = document.getElementById('return-home-btn');
+
+      // Show session actions when shots exist
+      function updateSessionActions() {
+        sessionActions.hidden = shots.length === 0;
+      }
+
+      document.getElementById('tracker-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var club = clubSelect.options[clubSelect.selectedIndex];
+        var swing = swingSelect.options[swingSelect.selectedIndex];
+        var dist = distInput.value;
+        if (!dist) return;
+
+        shots.push({ club: club.text, swing: swing.text, distance: dist });
+
+        var row = tbody.insertRow();
+        row.insertCell().textContent = shots.length;
+        row.insertCell().textContent = club.text;
+        row.insertCell().textContent = swing.text;
+        row.insertCell().textContent = dist + ' yds';
+
+        table.hidden = false;
+        empty.hidden = true;
+        updateSessionActions();
+        distInput.value = '';
+        distInput.focus();
+      });
+
+      // Start new session - clear all shots
+      newSessionBtn.addEventListener('click', function () {
+        if (shots.length === 0) return;
+
+        // Confirm before clearing
+        if (confirm('Clear all ' + shots.length + ' shot(s) and start a new session?')) {
+          shots = [];
+          tbody.innerHTML = '';
+          table.hidden = true;
+          empty.hidden = false;
+          sessionActions.hidden = true;
+          distInput.focus();
+        }
+      });
+
+      // Return to main menu
+      returnHomeBtn.addEventListener('click', function () {
+        window.location.href = '../index.html';
+      });
+    })();
+  </script>
+</body>
+</html>
